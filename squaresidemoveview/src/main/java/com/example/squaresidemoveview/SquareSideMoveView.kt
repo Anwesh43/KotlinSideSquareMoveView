@@ -96,10 +96,10 @@ class SquareSideMoveView(ctx : Context) : View(ctx) {
             paint.color = Color.parseColor("#3498db")
             canvas.save()
             canvas.translate(size/2 , size/2 + k)
-            canvas.rotate(180f * state.scales[1])
+            canvas.rotate(-90f * state.scales[1])
             for (i in 0..1) {
                 canvas.save()
-                canvas.translate(i * k * (1 - state.scales[0] + state.scales[2]), -k + (1 - i) * k * (state.scales[0] + 1 - state.scales[2]))
+                canvas.translate(i * k * (1 - state.scales[0] + state.scales[2]), (1 - i) * (-k +  k * (state.scales[0] * (1 - state.scales[2]))))
                 canvas.scale(1f - 2 * i, 1f)
                 val path : Path = Path()
                 path.moveTo(0f, size/2)
@@ -148,7 +148,7 @@ class SquareSideMoveView(ctx : Context) : View(ctx) {
         fun create(activity : Activity) : SquareSideMoveView {
             val view : SquareSideMoveView = SquareSideMoveView(activity)
             activity.setContentView(view)
-            return view 
+            return view
         }
     }
 }
