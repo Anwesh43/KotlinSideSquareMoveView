@@ -79,4 +79,43 @@ class SquareSideMoveView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    data class SquareSideMove (var i : Int, val state : State = State()) {
+
+        fun draw(canvas : Canvas, paint : Paint) {
+            val w : Float = canvas.width.toFloat()
+            val size : Float = w/10
+            val lx : Float = w + size
+            val k : Float = (lx + size)
+            paint.style = Paint.Style.STROKE
+            paint.strokeWidth = w/50
+            paint.strokeCap = Paint.Cap.ROUND
+            paint.color = Color.parseColor("#3498db")
+            canvas.save()
+            canvas.translate(size/2 , size/2 + k)
+            canvas.rotate(180f * state.scales[1])
+            for (i in 0..1) {
+                canvas.save()
+                canvas.translate(i * k * (1 - state.scales[0] + state.scales[2]), -k + (1 - i) * k * (state.scales[0] + 1 - state.scales[2]))
+                canvas.scale(1f - 2 * i, 1f)
+                val path : Path = Path()
+                path.moveTo(0f, size/2)
+                path.lineTo(-size/2, size/2)
+                path.lineTo(-size/2, -size/2)
+                path.lineTo(0f, -size/2)
+                canvas.drawPath(path, paint)
+                canvas.restore()
+            }
+            canvas.restore()
+        }
+
+        fun update(stopcb : (Float) -> Unit) {
+            state.update(stopcb)
+        }
+
+        fun startUpdating(startcb : () -> Unit) {
+            state.startUpdating(startcb)
+        }
+    }
+
 }
