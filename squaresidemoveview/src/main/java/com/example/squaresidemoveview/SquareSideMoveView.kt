@@ -118,4 +118,26 @@ class SquareSideMoveView(ctx : Context) : View(ctx) {
         }
     }
 
+    data class Renderer (var view : SquareSideMoveView) {
+
+        private val animator : Animator = Animator(view)
+
+        private val squareSideMove : SquareSideMove = SquareSideMove(0)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(Color.parseColor("#212121"))
+            squareSideMove.draw(canvas, paint)
+            animator.animate {
+                squareSideMove.update {
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            squareSideMove.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
