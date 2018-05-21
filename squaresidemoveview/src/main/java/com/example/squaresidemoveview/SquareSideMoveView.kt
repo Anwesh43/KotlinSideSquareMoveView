@@ -4,6 +4,7 @@ package com.example.squaresidemoveview
  * Created by anweshmishra on 22/05/18.
  */
 
+import android.app.Activity
 import android.content.Context
 import android.view.View
 import android.view.MotionEvent
@@ -140,6 +141,14 @@ class SquareSideMoveView(ctx : Context) : View(ctx) {
             squareSideMove.startUpdating {
                 animator.start()
             }
+        }
+    }
+
+    companion object {
+        fun create(activity : Activity) : SquareSideMoveView {
+            val view : SquareSideMoveView = SquareSideMoveView(activity)
+            activity.setContentView(view)
+            return view 
         }
     }
 }
